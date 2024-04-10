@@ -1,10 +1,20 @@
 // Import necessary dependencies and functions
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import thunk from 'redux-thunk';  // Middleware for handling asynchronous actions
+// import thunk from 'redux-thunk';  // Middleware for handling asynchronous actions
 import storage from 'redux-persist/lib/storage';  // Storage engine for Redux Persist
-import { persistReducer } from 'redux-persist';
+// import { persistReducer } from 'redux-persist';
 import appraisal from '../redux/features/appraisalSlice';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist'
 
 // Combine reducers (you might have more reducers in the future)
 const reducers = combineReducers({
@@ -24,7 +34,13 @@ const reducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
   reducer: reducer,  // Use the persisted reducer
   devTools: process.env.NODE_ENV !== 'production',  // Enable Redux DevTools in development
-  middleware: [thunk],  // Apply Redux Thunk middleware for handling async actions
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    })
+  // middleware: [thunk],  // Apply Redux Thunk middleware for handling async actions
 });
 
 // Define types for the RootState and AppDispatch using the store
