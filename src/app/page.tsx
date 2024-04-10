@@ -1,10 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { options } from './api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 import Navbar from './components/navbar/Navbar';
-
-
 
 export default async function Home() {
   const session = await getServerSession(options)
@@ -13,8 +10,6 @@ export default async function Home() {
     redirect('/api/auth/signin?callbackUrl=/')
   }
 
-
-
   return (
     <>
       <Navbar user={session?.user} pagetype={"Server"} />
@@ -22,12 +17,7 @@ export default async function Home() {
         <div>
           <div className="w-full md:w-6/12 lg:5/12 mx-auto flex h-screen justify-center items-center">
             <div>
-
-
               <p>Active Session</p>
-
-
-
             </div>
           </div>
         </div>
