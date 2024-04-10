@@ -18,7 +18,7 @@ export default async function Home() {
       <div>
         <div className="w-full md:w-6/12 lg:5/12 mx-auto flex h-screen justify-center items-center">
           <div>
-            sadasdas
+            Actiob Session
           </div>
         </div>
       </div>
