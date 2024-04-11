@@ -10,7 +10,7 @@ export const LOGIN = gql`
       name
       username
       email
-      # password
+      password
     }
     jwtToken {
       token

@@ -6,11 +6,11 @@ import createApolloClient from "../lib/apolloEndpoint";
 
 export default function AuthProvider({ children, session }: any) {
 
-  const apolloClient = createApolloClient(process.env.NEXT_PUBLIC_APOLLO_URI);
+  // const apolloClient = createApolloClient(process.env.NEXT_PUBLIC_APOLLO_URI);
 
   return (
     <SessionProvider session={session}>
-      <ApolloProvider client={apolloClient}>
+      <ApolloProvider client={createApolloClient}>
         {children}
       </ApolloProvider>
     </SessionProvider>
