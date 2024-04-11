@@ -35,39 +35,20 @@ const Signin = () => {
           email: credential.email,
           password: credential.password
         },
-        notifyOnNetworkStatusChange: true,
       });
 
       setIsLoading(false);
-      // Handle success response
-
-      if (!loginLoading && !loginError) {
-        console.log(data)
+      // Check if data exists before logging
+      if (data) {
+        console.log(data);
       }
+
 
     } catch (error) {
       setIsLoading(false);
-
-      if (error && (error as ApolloError).graphQLErrors && (error as ApolloError).graphQLErrors.length > 0) {
-        const graphqlError = (error as ApolloError).graphQLErrors[0];
-        if (graphqlError.extensions && graphqlError.extensions.code === 'UNAUTHENTICATED') {
-          // Handle authentication error
-          console.error('Authentication error:', graphqlError.message);
-          // Display error message to the user
-          alert(graphqlError.message); // You can replace this with a more elegant UI component
-        } else {
-          console.error('Other GraphQL error:', graphqlError);
-        }
-      } else {
-        console.error('Other error:', error);
-      }
-
-
+      console.log(error)
     }
   }
-
-
-
 
 
   async function handleGoogleSignin() {
@@ -93,10 +74,26 @@ const Signin = () => {
 
 
             {
-              !isLoading ? '' :
+              !loginLoading ? '' :
                 <span>Authenticating, Please wait...</span>
 
             }
+
+            {data && data.login && (
+              <div className='text-xs'>
+                <p>Username: {data.login.user.username}</p>
+                <div>
+                  <label htmlFor="email" className="block mt-5 font-medium text-gray-900">JWT Token: </label>
+                  <input
+                    type="text"
+                    value={data?.login?.jwtToken?.token || ""} // Use optional chaining to handle null values
+                    readOnly // Set input to read-only
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  />
+                </div>
+              </div>
+            )}
+
 
 
             <h2 className="text-2xl font-semibold text-center">Sign in to your account</h2>
