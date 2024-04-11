@@ -1,12 +1,8 @@
-// Import necessary dependencies and functions
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-// import thunk from 'redux-thunk';  // Middleware for handling asynchronous actions
-import storage from 'redux-persist/lib/storage';  // Storage engine for Redux Persist
-// import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import appraisal from '../redux/features/appraisalSlice';
 import {
-  persistStore,
   persistReducer,
   FLUSH,
   REHYDRATE,
@@ -40,7 +36,6 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-  // middleware: [thunk],  // Apply Redux Thunk middleware for handling async actions
 });
 
 // Define types for the RootState and AppDispatch using the store
